@@ -8,3 +8,7 @@ export const registerApi = async (data) => {
 export const loginApi = async (data) => {
     return await commonApi(`${base_Url}/log`, 'POST', "", data)
 }
+
+export const profileUpdateApi = async (data, header) => {
+    return await commonApi(`${base_Url}/updateprofile`, 'PUT', header, data)
+}
