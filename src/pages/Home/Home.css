@@ -1,0 +1,29 @@
+.home-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 91vh;
+  color: #fff;
+  background: #25252B;
+}
+
+.home-second-container {
+  overflow: hidden;
+  height: 80vh;
+  width: 80vw;
+  border: 2px solid #3C3C46;
+  border-radius: 10px;
+  box-shadow: 0 0 27px rgba(0, 0, 0, 0.3);
+}
+
+.home-message-container {
+  background-color: #1c1c20ad;
+  border-left: 1px solid rgba(0, 0, 0, 0.407);
+  height: 100%;
+}
+
+/* @media (max-width: 768px) {
+  .home-message-container{
+    display: none;
+  }
+} */

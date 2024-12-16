@@ -1,0 +1,60 @@
+.input-container {
+  position: relative;
+  width: 100%;
+  border-top: 2px solid white;
+  border-radius: 12px;
+  padding-top: 4px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.messageinp {
+  width: 94%;
+  height: 8vh;
+  padding: 0 0px 0 20px;
+  border-radius: 16px;
+  outline: none;
+  font-size: 16px;
+  overflow: auto;
+  background-color: transparent;
+}
+
+.message-btn {
+  position: absolute;
+  right: 25px;
+  top: 15%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.4s;
+  transition: all 0.2s ease; /* Smooth transition for animations */
+  border-radius: 30px;
+  border: none;
+}
+
+.messageinp:focus ~ .message-btn {
+  color: white;
+  display: inline-block;
+  animation: blast 1s ease-out;
+}
+
+@keyframes blast {
+  0% {
+    transform: scale(1) rotate(0deg); /* Initial size and rotation */
+    color: white;
+  }
+  30% {
+    transform: scale(1.2) rotate(20deg); /* Expand and rotate slightly */
+    color: #007bff;
+  }
+  50% {
+    transform: scale(1.5) rotate(-20deg); /* Max explosion size */
+    color: white;
+  }
+  70% {
+    transform: scale(1.2) rotate(10deg); /* Shrink slightly but still large */
+  }
+  100% {
+    transform: scale(1) rotate(0deg); /* Return to original size */
+    color: white;
+  }
+}

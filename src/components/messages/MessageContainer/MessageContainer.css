@@ -1,0 +1,11 @@
+.message-container-main {
+  border-bottom: 2px solid white;
+  border-radius: 12px;
+  height: 9vh;
+}
+
+.no-chat-selected {
+  border-left: 1px solid rgba(0, 0, 0, 0.407);
+  height: 80vh;
+  width: 100%;
+}

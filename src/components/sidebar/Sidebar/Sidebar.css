@@ -1,0 +1,18 @@
+.sidebar-main-container{
+  padding-top: 10px;
+  
+}
+
+.sidebar-second-container {
+  /* border-right: 4px solid rgba(0, 0, 0, 0.497); */
+}
+
+.sidebar-search-input {
+  height: 9vh;
+  padding: 0px 10px 0px 23px;
+}
+
+.sidebar-scroll-container {
+  overflow: auto;
+  height: 67vh;
+}
