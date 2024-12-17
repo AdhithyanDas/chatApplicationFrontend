@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import SearchInput from '../SearchInput/SearchInput'
-import Peoples from '../Peoples/Peoples'
+import People from '../People/People'
 import './Sidebar.css'
 
 function Sidebar() {
@@ -13,7 +13,7 @@ function Sidebar() {
                         <SearchInput />
                     </Col>
                     <Col sm={12} className='sidebar-scroll-container'>
-                        <Peoples />
+                        <People />
                     </Col>
                 </Row>
             </div>
