@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getUsersForSidebarApi } from '../../../services/allApis'
 import profilePicAvatar from '../../../images/avatar.png'
 import base_Url from '../../../services/baseUrl'
+import { messageContainerContext } from '../../../context/ContextApi'
 
 function People() {
 
     const [data, setData] = useState([])
+
+    const { setState } = useContext(messageContainerContext)
 
     useEffect(() => {
         getData()
@@ -27,6 +30,14 @@ function People() {
         }
     }
 
+    const handleDivClick = (fullName, profilePic) => {
+        setState({
+            Boolean: false,
+            fullName,
+            profilePic: profilePic ? `${base_Url}/profilePics/${profilePic}` : profilePicAvatar
+        });
+    };
+
     return (
         <>
             {
@@ -34,7 +45,7 @@ function People() {
                     <>
                         {
                             data?.map(item => (
-                                <div className="ms-3 flex align-items-center border cursor-pointer w-64">
+                                <div onClick={() => handleDivClick(item.fullName, item.profilePic)} className="ms-3 flex align-items-center border cursor-pointer w-64">
                                     <div className="avatar online">
                                         <div className="w-20 rounded-full">
                                             <img className='img-fluid' src={item.profilePic ? `${base_Url}/profilePics/${item.profilePic}` : profilePicAvatar} alt="Avatar" />
