@@ -20,3 +20,7 @@ export const deleteaccountApi = async (email, header) => {
 export const getUsersForSidebarApi = async (header) => {
     return await commonApi(`${base_Url}/home`, 'GET', header, "")
 }
+
+export const sendMessageApi = async (id, header, data) => {
+    return await commonApi(`${base_Url}/sendmessage/${id}`, 'POST', header, data);
+};

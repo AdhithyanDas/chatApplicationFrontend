@@ -30,11 +30,12 @@ function People() {
         }
     }
 
-    const handleDivClick = (fullName, profilePic) => {
+    const handleDivClick = (fullName, profilePic, _id) => {
         setState({
             Boolean: false,
             fullName,
-            profilePic: profilePic ? `${base_Url}/profilePics/${profilePic}` : profilePicAvatar
+            profilePic: profilePic ? `${base_Url}/profilePics/${profilePic}` : profilePicAvatar,
+            id: _id
         });
     };
 
@@ -45,7 +46,7 @@ function People() {
                     <>
                         {
                             data?.map(item => (
-                                <div onClick={() => handleDivClick(item.fullName, item.profilePic)} className="ms-3 flex align-items-center border cursor-pointer w-64">
+                                <div onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)} className="ms-3 flex align-items-center border cursor-pointer w-64">
                                     <div className="avatar online">
                                         <div className="w-20 rounded-full">
                                             <img className='img-fluid' src={item.profilePic ? `${base_Url}/profilePics/${item.profilePic}` : profilePicAvatar} alt="Avatar" />

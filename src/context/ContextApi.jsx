@@ -6,7 +6,7 @@ export const messageContainerContext = createContext()
 
 function ContextApi({ children }) {
 
-    const [state, setState] = useState({ Boolean: true, userName: '', profilePic: '' })
+    const [state, setState] = useState({ Boolean: true, id: '', userName: '', profilePic: '' })
 
     return (
         <>

@@ -55,6 +55,7 @@ function Auth() {
         sessionStorage.setItem("email", res.data.email)
         sessionStorage.setItem("fullName", res.data.fullName)
         sessionStorage.setItem("profilePic", res.data.profilePic)
+        sessionStorage.setItem("_id", res.data._id)
         nav('./home')
       } else {
 
