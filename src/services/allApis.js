@@ -24,3 +24,7 @@ export const getUsersForSidebarApi = async (header) => {
 export const sendMessageApi = async (id, header, data) => {
     return await commonApi(`${base_Url}/sendmessage/${id}`, 'POST', header, data);
 };
+
+export const getMessageApi = async (id, header) => {
+    return await commonApi(`${base_Url}/getmessage/${id}`, 'GET', header, "")
+}

@@ -1,12 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState,useRef } from 'react'
 import './MessageContainer.css'
-import Messages from '../Messages'
+import Message from '../Message'
 import MessageInput from '../MessageInput'
 import { messageContainerContext } from '../../../context/ContextApi'
 
 function MessageContainer() {
 
   const { state, setState } = useContext(messageContainerContext)
+
+  const [response,setRespone]=useState("")
+
+  const scrollRef = useRef(null); // Ref for scrolling
+
 
   useEffect(() => {
     setState(() => ({ Boolean: true }))
@@ -37,11 +42,11 @@ function MessageContainer() {
               </div>
             </div>
 
-            <div>
-              <Messages />
+            <div style={{ height: '60vh', overflow: 'auto' }} >
+              <Message resp={setRespone} scrollRef={scrollRef}  />
             </div>
             <div style={{ height: '9vh' }}>
-              <MessageInput />
+              <MessageInput response={scrollRef} />
             </div>
           </>
 
