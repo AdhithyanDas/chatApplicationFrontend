@@ -1,14 +1,21 @@
-import React, { useContext, useEffect, useState,useRef } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import './MessageContainer.css'
 import Message from '../Message'
 import MessageInput from '../MessageInput'
 import { messageContainerContext } from '../../../context/ContextApi'
+import { useSocketContext } from '../../../context/SocketContext'
 
 function MessageContainer() {
 
   const { state, setState } = useContext(messageContainerContext)
 
-  const [response,setRespone]=useState("")
+  const { onlineUsers } = useSocketContext()
+  const isOnline = onlineUsers.includes(state._id)
+
+  console.log("Online Users in MessageContainer:", onlineUsers); // Debugging
+
+
+  const [response, setRespone] = useState("")
 
   const scrollRef = useRef(null); // Ref for scrolling
 
@@ -22,7 +29,7 @@ function MessageContainer() {
       {
         state.Boolean ?
           <div className='d-flex justify-content-center flex-column align-items-center no-chat-selected'>
-            <h3>Welcome HAHAHA <i className="fa-solid fa-handshake-angle" size="lg" /></h3>
+            <h3>Welcome {sessionStorage.getItem('fullName')} <i className="fa-solid fa-handshake-angle" size="lg" /></h3>
             <h4>Select a chat to start Messaging</h4>
             <i className="fa-regular fa-message fs-3 mt-2" />
           </div>
@@ -30,7 +37,7 @@ function MessageContainer() {
           <>
             <div className='message-container-main mt-3'>
               <div className="flex align-items-center ms-3">
-                <div className="avatar online">
+                <div className={`avatar ${isOnline ? "online" : ""}`}>
                   <div className="w-14 rounded-full">
                     <img className='img-fluid' src={state.profilePic} alt="Avatar" />
                   </div>
@@ -43,7 +50,7 @@ function MessageContainer() {
             </div>
 
             <div style={{ height: '60vh', overflow: 'auto' }} >
-              <Message resp={setRespone} scrollRef={scrollRef}  />
+              <Message resp={setRespone} scrollRef={scrollRef} />
             </div>
             <div style={{ height: '9vh' }}>
               <MessageInput response={scrollRef} />

@@ -4,6 +4,7 @@ import { getMessageApi } from '../../services/allApis';
 import base_Url from '../../services/baseUrl';
 import profilepicavatar from '../../images/avatar.png';
 import './Message.css'; // For CSS adjustments
+import inComingMessages from '../../../hooks/inComingMessages';
 
 function Message() {
 
@@ -13,6 +14,8 @@ function Message() {
 
 
   const [messages, setMessages] = useState([]);
+
+  inComingMessages(messages, setMessages)
   const [receiverId, setReceiverId] = useState('');
 
   useEffect(() => {
