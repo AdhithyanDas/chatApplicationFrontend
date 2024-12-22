@@ -10,10 +10,7 @@ function MessageContainer() {
   const { state, setState } = useContext(messageContainerContext)
 
   const { onlineUsers } = useSocketContext()
-  const isOnline = onlineUsers.includes(state._id)
-
-  console.log("Online Users in MessageContainer:", onlineUsers); // Debugging
-
+  const isOnline = onlineUsers.includes(state.id); // Check if the current user is online
 
   const [response, setRespone] = useState("")
 
@@ -37,7 +34,7 @@ function MessageContainer() {
           <>
             <div className='message-container-main mt-3'>
               <div className="flex align-items-center ms-3">
-                <div className={`avatar ${isOnline ? "online" : ""}`}>
+                <div className={`avatar`}>
                   <div className="w-14 rounded-full">
                     <img className='img-fluid' src={state.profilePic} alt="Avatar" />
                   </div>
@@ -45,6 +42,7 @@ function MessageContainer() {
 
                 <div className='ms-3 mt-2'>
                   <p className='fw-bold'>{state.fullName}</p>
+                  <span className=''>{`${isOnline ? "online" : "offline"}`}</span>
                 </div>
               </div>
             </div>

@@ -11,44 +11,48 @@ export const SocketContext = ({ children }) => {
 
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState([])
-    const [userId, setUserId] = useState(null)
+    const [userId, setUserId] = useState(sessionStorage.getItem("_id"));
 
     useEffect(() => {
-        const storedUserId = sessionStorage.getItem('_id');
-        if (storedUserId) {
-            setUserId(storedUserId);  // Set userId to state
-        }
-    }, []);
-
-    useEffect(() => {
-        const userId = sessionStorage.getItem('_id');
-        console.log(userId);
+        // const userId = sessionStorage.getItem('_id');
 
         if (userId) {
-            const newSocket = io("http://localhost:3000", {
+            const socket = io("http://localhost:3000", {
                 query: {
                     userId
                 }
             })
 
-            setSocket(newSocket)
+            setSocket(socket)
 
-            newSocket.on("getOnlineUsers", (users) => {
-                console.log("Online Users Updated in Context:", users); // Debugging
+            socket.on("getOnlineUsers", (users) => {
                 setOnlineUsers(users)
             })
 
             return () => {
-                newSocket.close();
-                console.log("Socket connection closed");
+                socket.disconnect();
+                setSocket(null);
             };
         }
         else {
-            if (socket) socket.close()
-            setSocket(null)
+            if (socket) {
+                socket.disconnect();
+                setSocket(null)
+            }
 
         }
     }, [userId])
 
-    return <socketContext.Provider value={{ socket, onlineUsers }}>{children}</socketContext.Provider>
+
+    const handleLoginSubmit = (newUserId) => {
+        sessionStorage.setItem("_id", newUserId);
+        setUserId(newUserId);
+    };
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        setUserId(null);
+    };
+
+    return <socketContext.Provider value={{ socket, onlineUsers, handleLoginSubmit, handleLogout }}>{children}</socketContext.Provider>
 }

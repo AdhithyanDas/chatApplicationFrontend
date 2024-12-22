@@ -8,6 +8,7 @@ function Header() {
     const handleLogout = () => {
         sessionStorage.clear()
         nav('/')
+        window.location.reload()
     }
 
     return (

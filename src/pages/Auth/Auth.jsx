@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import './Auth.css'
 import { loginApi, registerApi } from '../../services/allApis'
 import { useNavigate } from 'react-router-dom'
+import { useSocketContext } from '../../context/SocketContext'
 
 function Auth() {
 
   const [user, setuser] = useState({
     fullName: "", email: "", password: ""
   })
+
+  const { handleLoginSubmit } = useSocketContext(); // Use the handleLogin function
 
   const [state, setState] = useState(false)
 
@@ -47,7 +50,7 @@ function Auth() {
       const res = await loginApi(user)
       console.log(res);
       if (res.status == 200) {
-
+        const userId = res.data._id;
         setuser({
           fullName: "", email: "", password: ""
         })
@@ -56,6 +59,7 @@ function Auth() {
         sessionStorage.setItem("fullName", res.data.fullName)
         sessionStorage.setItem("profilePic", res.data.profilePic)
         sessionStorage.setItem("_id", res.data._id)
+        handleLoginSubmit(userId)
         nav('./home')
       } else {
 

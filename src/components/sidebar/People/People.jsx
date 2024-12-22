@@ -13,7 +13,6 @@ function People() {
 
     const { onlineUsers } = useSocketContext()
 
-    console.log("Online Users in People Component:", onlineUsers); // Debugging
 
     useEffect(() => {
         getData()
