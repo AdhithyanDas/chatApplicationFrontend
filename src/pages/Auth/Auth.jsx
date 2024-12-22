@@ -13,43 +13,44 @@ function Auth() {
   const { handleLoginSubmit } = useSocketContext(); // Use the handleLogin function
 
   const [state, setState] = useState(false)
+  const [loading, setLoading] = useState(false) // State for loading indicator
 
   const nav = useNavigate()
 
   const changeState = () => {
     setState(!state)
-    // e.preventDefault()
   }
 
   const handleRegister = async (e) => {
-    // e.preventDefault()
-    console.log(user);
+    e.preventDefault()
+    setLoading(true)  // Set loading to true when registering
     const { fullName, email, password } = user
     if (!fullName || !email || !password) {
-
+      setLoading(false)
     } else {
       const res = await registerApi(user)
-      console.log(res);
-      if (res.status == 200) {
+      console.log(res)
+      setLoading(false)  // Set loading to false after response
+      if (res.status === 200) {
         setuser({
           fullName: "", email: "", password: ""
         })
         changeState()
-      } else {
-
       }
     }
   }
 
   const handleLogin = async (e) => {
     e.preventDefault()
+    setLoading(true)  // Set loading to true when logging in
     const { email, password } = user
     if (!email || !password) {
-
+      setLoading(false)
     } else {
       const res = await loginApi(user)
-      console.log(res);
-      if (res.status == 200) {
+      console.log(res)
+      setLoading(false)  // Set loading to false after response
+      if (res.status === 200) {
         const userId = res.data._id;
         setuser({
           fullName: "", email: "", password: ""
@@ -61,74 +62,83 @@ function Auth() {
         sessionStorage.setItem("_id", res.data._id)
         handleLoginSubmit(userId)
         nav('./home')
-      } else {
-
       }
     }
   }
 
   return (
-    <>
-      <div className='auth-main-container'>
-        <div className='auth-second-container'>
-          <div className="auth-form">
-            {
-              state ?
-                <h2>Register</h2>
-                :
-                <h2>Login</h2>
-            }
-            <form action="">
-              {
-                state &&
-                <div>
-                  <div className='auth-input-box'>
-                    <input onChange={e => setuser({ ...user, fullName: e.target.value })} value={user.fullName} type="text" id='username' required />
-                    <label htmlFor="username">Full name</label>
-                    <i className="fa-solid fa-user" />
-                  </div>
-                </div>
-              }
-
+    <div className='auth-main-container'>
+      <div className='auth-second-container'>
+        <div className="auth-form">
+          <h2>
+            {loading ? (
+              <i className="fa-solid fa-spinner fa-spin auth-spinner"></i>  // Show spinner when loading
+            ) : (
+              state ? 'Register' : 'Login'  // Show Register/Login text based on state
+            )}
+          </h2>
+          <form action="">
+            {state &&
               <div>
                 <div className='auth-input-box'>
-                  <input onChange={e => setuser({ ...user, email: e.target.value })} value={user.email} type="email" id='email' required />
-                  <label htmlFor="email">Email address</label>
-                  <i className="fa-solid fa-envelope" />
-                </div>
-                <div className='auth-input-box'>
-                  <input onChange={e => setuser({ ...user, password: e.target.value })} value={user.password} type="password" id='password' required />
-                  <label htmlFor="password">Password</label>
-                  <i className="fa-solid fa-lock" />
+                  <input
+                    onChange={e => setuser({ ...user, fullName: e.target.value })}
+                    value={user.fullName}
+                    type="text"
+                    id='username'
+                    required
+                  />
+                  <label htmlFor="username">Full name</label>
+                  <i className="fa-solid fa-user" />
                 </div>
               </div>
+            }
 
-              {
-                state ?
-                  <div className='auth-input-box'>
-                    <button onClick={handleRegister} className='btn sign-up_in-btn' type='submit'>Sign Up</button>
-                  </div>
-                  :
-                  <div className='auth-input-box'>
-                    <button onClick={handleLogin} className='btn sign-up_in-btn' type='submit'>Sign In</button>
-                  </div>
+            <div>
+              <div className='auth-input-box'>
+                <input
+                  onChange={e => setuser({ ...user, email: e.target.value })}
+                  value={user.email}
+                  type="email"
+                  id='email'
+                  required
+                />
+                <label htmlFor="email">Email address</label>
+                <i className="fa-solid fa-envelope" />
+              </div>
+              <div className='auth-input-box'>
+                <input
+                  onChange={e => setuser({ ...user, password: e.target.value })}
+                  value={user.password}
+                  type="password"
+                  id='password'
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <i className="fa-solid fa-lock" />
+              </div>
+            </div>
 
-              }
-              {
-                state ?
-                  <div className='auth-link-container'>
-                    <p style={{ color: '#EDEDED' }}>Have an account? <a onClick={changeState} href="#" className='auth-link'>Sign In</a></p>
-                  </div>
-                  :
-                  <div className='auth-link-container' >
-                    <p style={{ color: '#EDEDED' }}>Don't have an account? <a onClick={changeState} href="#" className='auth-link'>Sign Up</a></p>
-                  </div>
-              }
-            </form>
-          </div>
+            <div className='auth-input-box'>
+              {state ? (
+                <button onClick={handleRegister} className='btn sign-up_in-btn' type='submit'>Sign Up</button>
+              ) : (
+                <button onClick={handleLogin} className='btn sign-up_in-btn' type='submit'>Sign In</button>
+              )}
+            </div>
+
+            <div className='auth-link-container'>
+              <p style={{ color: '#EDEDED' }}>
+                {state ? 'Have an account?' : "Don't have an account?"}
+                <a onClick={changeState} href="#" className='auth-link'>
+                  {state ? 'Sign In' : 'Sign Up'}
+                </a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

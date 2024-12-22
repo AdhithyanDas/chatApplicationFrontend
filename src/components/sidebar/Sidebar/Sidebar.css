@@ -1,18 +1,44 @@
-.sidebar-main-container{
+.sidebar-main-container {
   padding-top: 10px;
-  
+  height: 100vh; /* Ensure the sidebar takes the full height of the screen */
 }
 
 .sidebar-second-container {
-  /* border-right: 4px solid rgba(0, 0, 0, 0.497); */
+  /* Optionally add a border or shadow if required */
 }
 
 .sidebar-search-input {
-  height: 9vh;
-  padding: 0px 10px 0px 23px;
+  height: 9vh; /* Adjust search input height */
+  padding: 0px 10px 0px 23px; /* Padding for input */
 }
 
 .sidebar-scroll-container {
-  overflow: auto;
-  height: 67vh;
+  overflow: auto; /* Make the content scrollable */
+  height: 67vh; /* Adjust the height to fit the content */
+  display: flex;
+  flex-direction: column; /* Align content in a column */
+  justify-content: flex-start; /* Align content to the top */
+  align-items: flex-start; /* Align content to the left */
+  position: relative; /* Add relative positioning to allow absolute centering of spinner */
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center; /* Center spinner horizontally */
+  align-items: center; /* Center spinner vertically */
+  position: absolute; /* Absolute positioning to place it at the center */
+  top: 50%; /* Move spinner to the center vertically */
+  left: 50%; /* Move spinner to the center horizontally */
+  transform: translate(-50%, -50%); /* Ensure true centering */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+.sidebar-scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 10px;
 }

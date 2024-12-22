@@ -11,6 +11,8 @@ function MessageInput({ response }) {
         text: "", receiverId: "", senderId: sessionStorage.getItem('_id')
     })
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         setMessages(e => ({
             ...e, receiverId: state.id
@@ -18,6 +20,9 @@ function MessageInput({ response }) {
     }, [state.id])
 
     const handleMessages = async () => {
+        if (loading || !messages.text.trim()) return;
+        setLoading(true);
+
         const { text, receiverId, senderId } = messages;
         const data = { text, receiverId, senderId };
 
@@ -46,8 +51,11 @@ function MessageInput({ response }) {
 
             if (response.current) {
                 response.current.scrollIntoView({ behavior: 'smooth' });
-              }        } catch (err) {
+            }
+        } catch (err) {
             console.error(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -56,8 +64,12 @@ function MessageInput({ response }) {
         <>
             <div className='input-container'>
                 <input onChange={e => setMessages({ ...messages, text: e.target.value })} value={messages.text} type="text" placeholder='Type a message...' className='messageinp' />
-                <button className='btn message-btn' onClick={handleMessages}>
-                    <i className="fa-solid fa-paper-plane send-icon" />
+                <button className='btn message-btn' onClick={handleMessages} disabled={loading}>
+                    {loading ? (
+                        <i className="fa-solid fa-spinner fa-spin send-icon" /> // Spinner icon
+                    ) : (
+                        <i className="fa-solid fa-paper-plane send-icon" /> // Default send icon
+                    )}
                 </button>
             </div>
         </>
