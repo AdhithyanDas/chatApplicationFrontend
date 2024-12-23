@@ -1,0 +1,8 @@
+@media (max-width: 480px) {
+  span {
+    display: none;
+  }
+  nav .container {
+    padding-left: 30px;
+  }
+}

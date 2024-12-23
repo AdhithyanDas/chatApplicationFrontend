@@ -11,8 +11,8 @@
   padding: 0px 10px 0px 10px;
 }
 
-.profile-second-input{
-  color: #808086
+.profile-second-input {
+  color: #7f7f83;
 }
 
 .profile-second-input:focus {
@@ -66,7 +66,7 @@
   position: absolute;
   height: 300%;
   width: 100%;
-  background: linear-gradient(#25252bd5, #007bff92, #25252bd5, #007bff92);
+  background: linear-gradient(#25252b, #007bff92, #25252b, #007bff92);
   top: -100%;
   left: 0;
   z-index: -1;
@@ -81,13 +81,34 @@
   border: 2px solid #007bff92;
 }
 
-.profile-first-input{
+.profile-first-input {
   border: 2px solid #3c3c46;
   transition: 0.5s;
   color: white;
 }
 
-.profile-first-input:focus{
+.profile-first-input:focus {
   outline: none;
   border: 2px solid #262629;
+}
+
+@media (min-width: 481px) and (max-width: 1124px) {
+  .profile-second-container {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1125px) {
+  .profile-second-container {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-second-container {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    box-shadow: none;
+  }
 }

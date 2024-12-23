@@ -87,10 +87,10 @@ function Profile() {
             text: "Are you sure you want to delete your account?",
             icon: "warning",
             showCancelButton: true,
-            background: "#25252B",
-            color: "#ffffff",
-            iconColor: "#ffcc00",
-            confirmButtonColor: "#007BFF92",
+            background: "#1B1B1F",
+            color: "#EDEDED",
+            iconColor: "red",
+            confirmButtonColor: "#004080",
             cancelButtonColor: "#3C3C46",
             confirmButtonText: "Yes, Delete My Account!",
             cancelButtonText: "Cancel",
@@ -120,7 +120,7 @@ function Profile() {
     return (
         <>
             <div className="d-flex justify-content-center align-items-center" style={{ height: '91vh', background: '#25252B' }} >
-                <div className="profile-second-container px-4" style={{ width: '40vw', height: '76vh' }}>
+                <div className="profile-second-container px-4" style={{ minWidth: '35vw', height: '76vh' }}>
                     <div className="d-flex justify-between">
                         <Link to={'/home'}>
                             <button className="btn" style={{ color: '#EDEDED', border: '0', marginLeft: '-23px' }}>
@@ -138,7 +138,7 @@ function Profile() {
                         </Link>
                     </div>
                     <h3 className="text-white text-center fw-bold">Profile</h3>
-                    <p className="text-white text-center">Your profile information</p>
+                    <p className="text-center" style={{ color: '#EDEDED' }}>Your profile information</p>
                     <div className="d-flex justify-content-center relative">
                         <img
                             className="size-32 rounded-full object-cover border-4"

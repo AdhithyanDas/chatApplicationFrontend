@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext } from '../../context/ContextApi'
+import './Header.css'
 
 function Header() {
 
@@ -23,13 +24,13 @@ function Header() {
                         <Link to={'/profile'}>
                             <button className='btn' style={{ color: '#EDEDED', border: '0', }}>
                                 <i className="fa-solid fa-user fs-5 me-1" />
-                                Profile
+                                <span>Profile</span>
                             </button>
                         </Link>
 
                         <button onClick={handleLogout} className='btn' style={{ color: '#EDEDED', border: '0' }}>
                             <i className="fa-solid fa-right-from-bracket fs-5 me-1" />
-                            Logout
+                            <span>Logout</span>
                         </button>
                     </div>
                 </div>
