@@ -5,16 +5,17 @@ import { Camera, User, Mail, ArrowLeft, Trash } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteaccountApi, profileUpdateApi } from '../../services/allApis';
 import base_Url from '../../services/baseUrl';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 function Profile() {
+
     const [userData, setUserData] = useState({
-        profilePic: '',
-        fullName: '',
-        email: '',
+        profilePic: '', fullName: '', email: '',
     });
 
     const [preview, setPreview] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -29,7 +30,7 @@ function Profile() {
     }, []);
 
     useEffect(() => {
-        if (userData.profilePic && userData.profilePic.type) {
+        if (userData.profilePic.type) {
             setPreview(URL.createObjectURL(userData.profilePic));
         } else {
             setPreview('');
@@ -37,12 +38,8 @@ function Profile() {
     }, [userData.profilePic]);
 
     const handleProfileUpdation = async () => {
-        if (!userData.email || !userData.fullName) return;
-
-        setLoading(true); // Set loading to true when the update starts
-
+        setLoading(true);
         const { profilePic, fullName, email } = userData;
-
         try {
             const header = {
                 'Content-Type': userData.profilePic.type ? 'multipart/form-data' : 'application/json',
@@ -62,37 +59,61 @@ function Profile() {
             }
 
             if (res.status === 200) {
+                toast.success("Your changes have been saved!")
                 sessionStorage.clear();
                 nav('/');
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload();
+                }, [1000])
             } else {
-                console.error('Profile update failed');
+                toast.error("Full Name is required!")
             }
         } catch (error) {
             console.error('Error updating profile:', error);
         } finally {
-            setLoading(false); // Reset loading state after update completes
+            setLoading(false);
         }
     };
 
-    const handleDeleteAccound = async (email) => {
-        const header = {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${sessionStorage.getItem('token')}`,
-        };
+    const handleDeleteAccount = async (email, e) => {
+        e.preventDefault();
+            const result = await Swal.fire({
+                title: "Delete Account?",
+                text: "Are you sure you want to delete your account?",
+                icon: "warning",
+                showCancelButton: true,
+                background: "#25252B", // Dark background
+                color: "#ffffff", // White text for contrast
+                iconColor: "#ffcc00", // Warning icon color
+                confirmButtonColor: "#007BFF92", // Blue highlight for confirm button
+                cancelButtonColor: "#3C3C46", // Darker tone for cancel button
+                confirmButtonText: "Yes, Delete My Account!",
+                cancelButtonText: "Cancel",
+            });
 
-        const res = await deleteaccountApi(email, header);
-        if (res.status === 200) {
-            nav('/');
-        }
+            if (result.isConfirmed) {
+                const header = {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${sessionStorage.getItem('token')}`,
+                };
+
+                const res = await deleteaccountApi(email, header);
+
+                if (res.status === 200) {
+                    toast.success("Your account has been successfully deleted!")
+                    sessionStorage.clear();
+                    nav('/');
+                    setTimeout(()=>{
+                        window.location.reload();
+                    },[1000])
+                } 
+            }
+
     };
 
     return (
         <>
-            <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ height: '91vh', background: '#25252B' }}
-            >
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '91vh', background: '#25252B' }} >
                 <div className="profile-second-container px-4" style={{ width: '40vw', height: '76vh' }}>
                     <div className="d-flex justify-between">
                         <Link to={'/home'}>
@@ -102,7 +123,7 @@ function Profile() {
                         </Link>
                         <Link to={'/'}>
                             <button
-                                onClick={() => handleDeleteAccound(userData.email)}
+                                onClick={(e) => handleDeleteAccount(userData.email, e)}
                                 className="btn"
                                 style={{ color: '#FF3B30', border: '0', marginRight: '-23px' }}
                             >
@@ -163,10 +184,10 @@ function Profile() {
                         <button
                             className="btn text-white profile-save-button"
                             onClick={handleProfileUpdation}
-                            disabled={loading} // Disable the button during loading
+                            disabled={loading}
                         >
                             {loading ? (
-                                <i className="fa-solid fa-spinner fa-spin"></i> // Loading spinner icon
+                                <i className="fa-solid fa-spinner fa-spin"></i>
                             ) : (
                                 'Save Changes'
                             )}

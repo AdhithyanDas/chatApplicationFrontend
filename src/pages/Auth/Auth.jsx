@@ -3,6 +3,7 @@ import './Auth.css'
 import { loginApi, registerApi } from '../../services/allApis'
 import { useNavigate } from 'react-router-dom'
 import { useSocketContext } from '../../context/SocketContext'
+import toast from 'react-hot-toast'
 
 function Auth() {
 
@@ -10,10 +11,10 @@ function Auth() {
     fullName: "", email: "", password: ""
   })
 
-  const { handleLoginSubmit } = useSocketContext(); // Use the handleLogin function
-
   const [state, setState] = useState(false)
-  const [loading, setLoading] = useState(false) // State for loading indicator
+  const [loading, setLoading] = useState(false)
+
+  const { handleLoginSubmit } = useSocketContext();
 
   const nav = useNavigate()
 
@@ -23,33 +24,38 @@ function Auth() {
 
   const handleRegister = async (e) => {
     e.preventDefault()
-    setLoading(true)  // Set loading to true when registering
+    setLoading(true)
     const { fullName, email, password } = user
     if (!fullName || !email || !password) {
       setLoading(false)
+      toast.error("All fields are required!")
     } else {
       const res = await registerApi(user)
       console.log(res)
-      setLoading(false)  // Set loading to false after response
+      setLoading(false)
       if (res.status === 200) {
         setuser({
           fullName: "", email: "", password: ""
         })
+        toast.success("Registration successful!")
         changeState()
+      } else {
+        toast.error("Password must be at least 6 characters!")
       }
     }
   }
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    setLoading(true)  // Set loading to true when logging in
+    setLoading(true)
     const { email, password } = user
     if (!email || !password) {
       setLoading(false)
+      toast.error("Please enter both email and password!")
     } else {
       const res = await loginApi(user)
       console.log(res)
-      setLoading(false)  // Set loading to false after response
+      setLoading(false)
       if (res.status === 200) {
         const userId = res.data._id;
         setuser({
@@ -61,7 +67,10 @@ function Auth() {
         sessionStorage.setItem("profilePic", res.data.profilePic)
         sessionStorage.setItem("_id", res.data._id)
         handleLoginSubmit(userId)
+        toast.success("Login successful!")
         nav('./home')
+      } else {
+        toast.error("Incorrect email or password!")
       }
     }
   }
@@ -72,9 +81,9 @@ function Auth() {
         <div className="auth-form">
           <h2>
             {loading ? (
-              <i className="fa-solid fa-spinner fa-spin auth-spinner"></i>  // Show spinner when loading
+              <i className="fa-solid fa-spinner fa-spin auth-spinner"></i>
             ) : (
-              state ? 'Register' : 'Login'  // Show Register/Login text based on state
+              state ? 'Register' : 'Login'
             )}
           </h2>
           <form action="">
