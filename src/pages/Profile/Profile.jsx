@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Profile.css';
 import profilepicavatar from '../../images/avatar.png';
 import { Camera, User, Mail, ArrowLeft, Trash } from 'lucide-react';
@@ -7,6 +7,7 @@ import { deleteaccountApi, profileUpdateApi } from '../../services/allApis';
 import base_Url from '../../services/baseUrl';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { authContext } from '../../context/ContextApi';
 
 function Profile() {
 
@@ -16,6 +17,9 @@ function Profile() {
 
     const [preview, setPreview] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { authContextStatus, setAuthContextStatus } = useContext(authContext)
+
     const nav = useNavigate();
 
     useEffect(() => {
@@ -61,6 +65,7 @@ function Profile() {
             if (res.status === 200) {
                 toast.success("Your changes have been saved!")
                 sessionStorage.clear();
+                setAuthContextStatus(false)
                 nav('/');
                 setTimeout(() => {
                     window.location.reload();
@@ -77,37 +82,38 @@ function Profile() {
 
     const handleDeleteAccount = async (email, e) => {
         e.preventDefault();
-            const result = await Swal.fire({
-                title: "Delete Account?",
-                text: "Are you sure you want to delete your account?",
-                icon: "warning",
-                showCancelButton: true,
-                background: "#25252B", // Dark background
-                color: "#ffffff", // White text for contrast
-                iconColor: "#ffcc00", // Warning icon color
-                confirmButtonColor: "#007BFF92", // Blue highlight for confirm button
-                cancelButtonColor: "#3C3C46", // Darker tone for cancel button
-                confirmButtonText: "Yes, Delete My Account!",
-                cancelButtonText: "Cancel",
-            });
+        const result = await Swal.fire({
+            title: "Delete Account?",
+            text: "Are you sure you want to delete your account?",
+            icon: "warning",
+            showCancelButton: true,
+            background: "#25252B",
+            color: "#ffffff",
+            iconColor: "#ffcc00",
+            confirmButtonColor: "#007BFF92",
+            cancelButtonColor: "#3C3C46",
+            confirmButtonText: "Yes, Delete My Account!",
+            cancelButtonText: "Cancel",
+        });
 
-            if (result.isConfirmed) {
-                const header = {
-                    'Content-Type': 'application/json',
-                    Authorization: `Token ${sessionStorage.getItem('token')}`,
-                };
+        if (result.isConfirmed) {
+            const header = {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${sessionStorage.getItem('token')}`,
+            };
 
-                const res = await deleteaccountApi(email, header);
+            const res = await deleteaccountApi(email, header);
 
-                if (res.status === 200) {
-                    toast.success("Your account has been successfully deleted!")
-                    sessionStorage.clear();
-                    nav('/');
-                    setTimeout(()=>{
-                        window.location.reload();
-                    },[1000])
-                } 
+            if (res.status === 200) {
+                toast.success("Your account has been successfully deleted!")
+                sessionStorage.clear();
+                nav('/');
+                setTimeout(() => {
+                    window.location.reload();
+                }, [1000])
+                setAuthContextStatus(false)
             }
+        }
 
     };
 
@@ -161,20 +167,22 @@ function Profile() {
 
                     <div className="mt-4 w-100">
                         <div className="d-grid">
-                            <div className="d-flex">
-                                <User className="w-4 h-4 mt-1 text-white" />
-                                <span className="text-white ms-1">Full Name</span>
-                            </div>
+                            <label htmlFor='fullname' className="d-flex text-white">
+                                <User className="w-4 h-4 mt-1" />
+                                <span className="ms-1">Full Name</span>
+                            </label>
                             <input
+                                id='fullname'
+                                className='profile-first-input'
                                 type="text"
                                 defaultValue={userData.fullName}
                                 onChange={(e) => setUserData({ ...userData, fullName: e.target.value })}
                             />
                         </div>
                         <div className="d-grid mt-3">
-                            <div className="d-flex">
-                                <Mail className="w-4 h-4 mt-1 text-white" />
-                                <span className="text-white ms-1">Email address</span>
+                            <div className="d-flex profile-second-input">
+                                <Mail className="w-4 h-4 mt-1" />
+                                <span className="ms-1">Email address</span>
                             </div>
                             <input type="text" className="profile-second-input border-0" value={userData.email} readOnly />
                         </div>

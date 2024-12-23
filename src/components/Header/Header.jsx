@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { authContext } from '../../context/ContextApi'
 
 function Header() {
 
     const nav = useNavigate()
+    const { authContextStatus, setAuthContextStatus } = useState(authContext)
 
     const handleLogout = () => {
         sessionStorage.clear()
         nav('/')
         window.location.reload()
+        setAuthContextStatus(false)
     }
 
     return (

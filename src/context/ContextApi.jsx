@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { createContext } from "react";
 
 export const messageContainerContext = createContext()
+export const authContext = createContext()
 
 
 function ContextApi({ children }) {
 
     const [state, setState] = useState({ Boolean: true, id: '', userName: '', profilePic: '' })
+    const [authContextStatus, setAuthContextStatus] = useState(false)
 
     return (
         <>
             <messageContainerContext.Provider value={{ state, setState }}>
-                {children}
+                <authContext.Provider value={{ authContextStatus, setAuthContextStatus }}>
+                    {children}
+                </authContext.Provider>
             </messageContainerContext.Provider>
         </>
     )

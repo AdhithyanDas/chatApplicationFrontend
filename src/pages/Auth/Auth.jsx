@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Auth.css'
 import { loginApi, registerApi } from '../../services/allApis'
 import { useNavigate } from 'react-router-dom'
 import { useSocketContext } from '../../context/SocketContext'
 import toast from 'react-hot-toast'
+import { authContext } from '../../context/ContextApi'
 
 function Auth() {
 
@@ -13,6 +14,8 @@ function Auth() {
 
   const [state, setState] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const { authContextStatus, setAuthContextStatus } = useContext(authContext)
 
   const { handleLoginSubmit } = useSocketContext();
 
@@ -68,6 +71,7 @@ function Auth() {
         sessionStorage.setItem("_id", res.data._id)
         handleLoginSubmit(userId)
         toast.success("Login successful!")
+        setAuthContextStatus(true)
         nav('./home')
       } else {
         toast.error("Incorrect email or password!")
