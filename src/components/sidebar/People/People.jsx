@@ -60,7 +60,7 @@ function People({ search }) {
                         <div
                             key={item._id}
                             onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)}
-                            className="ms-3 flex align-items-center border cursor-pointer w-64"
+                            className="flex align-items-center border cursor-pointer w-99 ms-3"
                         >
                             <div className={`avatar ${isOnline ? "online" : ""}`}>
                                 <div className="w-20 rounded-full">

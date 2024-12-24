@@ -1,6 +1,5 @@
 .sidebar-main-container {
-  padding-top: 10px;
-  height: 100vh; /* Ensure the sidebar takes the full height of the screen */
+  height: 100%;
 }
 
 .sidebar-second-container {
@@ -9,17 +8,15 @@
 
 .sidebar-search-input {
   height: 9vh; /* Adjust search input height */
-  padding: 0px 10px 0px 23px; /* Padding for input */
+  padding: 0px 10px 0px 10px; 
+  margin-top: 5px;
 }
 
 .sidebar-scroll-container {
-  overflow: auto; /* Make the content scrollable */
-  height: 67vh; /* Adjust the height to fit the content */
-  display: flex;
-  flex-direction: column; /* Align content in a column */
-  justify-content: flex-start; /* Align content to the top */
-  align-items: flex-start; /* Align content to the left */
-  position: relative; /* Add relative positioning to allow absolute centering of spinner */
+  overflow: auto; 
+  padding-bottom: 5px; 
+  height: 70vh;
+  position: relative; 
 }
 
 .spinner-wrapper {
@@ -34,11 +31,3 @@
   height: 100%; /* Full height */
 }
 
-.sidebar-scroll-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.sidebar-scroll-container::-webkit-scrollbar-thumb {
-  background: #007bff;
-  border-radius: 10px;
-}

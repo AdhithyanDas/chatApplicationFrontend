@@ -71,9 +71,8 @@ function Message() {
             {messages.length > 0 ? (
               messages.map((item) => (
                 <div
-                  className={`chat ${
-                    item.senderId === state.id ? 'chat-start' : 'chat-end'
-                  }`}
+                  className={`chat ${item.senderId === state.id ? 'chat-start' : 'chat-end'
+                    }`}
                   key={item._id}
                   ref={scrollRef}
                 >
@@ -87,21 +86,24 @@ function Message() {
                               ? state.profilePic
                               : profilepicavatar
                             : sessionStorage.getItem('profilePic')
-                            ? `${base_Url}/profilePics/${sessionStorage.getItem('profilePic')}`
-                            : profilepicavatar
+                              ? `${base_Url}/profilePics/${sessionStorage.getItem('profilePic')}`
+                              : profilepicavatar
                         }
                       />
                     </div>
                   </div>
-                  <div className="chat-bubble">{item.text}</div>
+                  <div className="chat-bubble" style={{ background: item.senderId === state.id ? "#3498db" : "#2ecc71", color: '#fff' }}>{item.text}</div>
                   <div className="chat-footer opacity-50">
-                    {new Date(item.createdAt).toLocaleTimeString()}
+                    {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                   <span ref={scrollRef}></span>
                 </div>
               ))
             ) : (
-              <h1>No messages to display</h1>
+              <div className='flex justify-center align-items-center flex-col h-100'>
+                <h3><strong>No chats yet. Start a conversation!</strong></h3>
+                <i className="fa-regular fa-comment-dots fs-4 start-conversation-icon"></i>
+              </div>
             )}
           </div>
         )}

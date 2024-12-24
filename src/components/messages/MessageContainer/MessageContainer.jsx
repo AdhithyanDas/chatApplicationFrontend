@@ -26,32 +26,32 @@ function MessageContainer() {
       {
         state.Boolean ?
           <div className='d-flex justify-content-center flex-column align-items-center no-chat-selected'>
-            <h3>Welcome {sessionStorage.getItem('fullName')} <i className="fa-solid fa-handshake-angle" size="lg" /></h3>
-            <h4>Select a chat to start Messaging</h4>
-            <i className="fa-regular fa-message fs-3 mt-2" />
+            <h3>Welcome, <strong>{sessionStorage.getItem('fullName')}</strong> <i className="fa-solid fa-handshake-angle " size="lg" /></h3>
+            <h4><strong>Select a chat</strong> to start messaging</h4>
+            <i className="fa-regular fa-message fs-3 mt-2 message-icon" />
           </div>
           :
           <>
-            <div className='message-container-main mt-3'>
-              <div className="flex align-items-center ms-3">
-                <div className={`avatar`}>
-                  <div className="w-14 rounded-full">
+            <div className='message-container-main'>
+              <div className="flex message-top-container pt-2 ps-3">
+                <div className="avatar">
+                  <div className="w-16 h-16 rounded-full">
                     <img className='img-fluid' src={state.profilePic} alt="Avatar" />
                   </div>
                 </div>
 
-                <div className='ms-3 mt-2'>
-                  <p className='fw-bold'>{state.fullName}</p>
-                  <span className=''>{`${isOnline ? "online" : "offline"}`}</span>
+                <div className='flex flex-col ms-3 mt-2'>
+                  <span className='fw-bold'>{state.fullName}</span>
+                  <p style={{ color: isOnline ? "#28A745" : "#E63946" }}>{`${isOnline ? "online" : "offline"}`}</p>
                 </div>
               </div>
-            </div>
 
-            <div style={{ height: '60vh', overflow: 'auto' }} >
-              <Message resp={setRespone} scrollRef={scrollRef} />
-            </div>
-            <div style={{ height: '9vh' }}>
-              <MessageInput response={scrollRef} />
+              <div>
+                <Message resp={setRespone} scrollRef={scrollRef} />
+              </div>
+              <div>
+                <MessageInput response={scrollRef} />
+              </div>
             </div>
           </>
 

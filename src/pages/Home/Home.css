@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 91vh;
+  height: 91vh;
   color: #fff;
   background: #25252B;
 }
@@ -18,8 +18,9 @@
 
 .home-message-container {
   background-color: #1c1c20ad;
-  border-left: 1px solid rgba(0, 0, 0, 0.407);
-  height: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.227);
+  box-shadow: 0 0 27px rgba(0, 0, 0, 0.3);
+  /* height: 100%; */
 }
 
 /* @media (max-width: 768px) {

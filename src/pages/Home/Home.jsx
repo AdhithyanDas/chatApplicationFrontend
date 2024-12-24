@@ -10,11 +10,11 @@ function Home() {
       <div className='home-main-container'>
         <div className='home-second-container'>
           <Row>
-            <Col sm={12} md={12} lg={3}>
+            <Col sm={2} md={2} lg={3}>
               <Sidebar />
             </Col>
 
-            <Col sm={12} md={12} lg={9} className='home-message-container ps-0'>
+            <Col sm={10} md={10} lg={9} className='home-message-container ps-0'>
               <MessageContainer />
             </Col>
           </Row>

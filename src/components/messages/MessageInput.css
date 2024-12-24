@@ -1,16 +1,15 @@
 .input-container {
   position: relative;
   width: 100%;
-  border-top: 2px solid white;
+  border-top: 2px solid #3c3c46;
+  box-shadow: 0 0 27px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
-  padding-top: 4px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  height: 10vh;
 }
 
 .messageinp {
-  width: 94%;
-  height: 8vh;
+  width: 92%;
+  height: 9vh;
   padding: 0 0px 0 20px;
   border-radius: 16px;
   outline: none;
@@ -21,7 +20,8 @@
 
 .message-btn {
   position: absolute;
-  right: 25px;
+  color: #ffffff;
+  right: 20px;
   top: 15%;
   cursor: pointer;
   font-size: 18px;
@@ -29,6 +29,10 @@
   transition: all 0.2s ease; /* Smooth transition for animations */
   border-radius: 30px;
   border: none;
+}
+
+.message-btn:hover{
+  color: #3498db; /* Optional: Change to blue when hovered for interaction */
 }
 
 .messageinp:focus ~ .message-btn {
@@ -44,7 +48,7 @@
   }
   30% {
     transform: scale(1.2) rotate(20deg); /* Expand and rotate slightly */
-    color: #007bff;
+    color: #007bff92;
   }
   50% {
     transform: scale(1.5) rotate(-20deg); /* Max explosion size */
