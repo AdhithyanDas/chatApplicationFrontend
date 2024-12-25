@@ -1,0 +1,5 @@
+/* Apply color on hover for all .people-container */
+.people-container:hover {
+    background-color: #1c1c20ad ; /* Hover color */
+}
+

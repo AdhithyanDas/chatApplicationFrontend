@@ -11,6 +11,7 @@ function People({ search }) {
     const [loading, setLoading] = useState(true); // Loading state
     const { state, setState } = useContext(messageContainerContext);
     const { onlineUsers } = useSocketContext();
+    const [clickedUserId, setClickedUserId] = useState(null); // Track clicked user
 
     useEffect(() => {
         getData();
@@ -32,6 +33,7 @@ function People({ search }) {
         }
     };
 
+
     const handleDivClick = (fullName, profilePic, _id) => {
         setState({
             Boolean: false,
@@ -39,6 +41,7 @@ function People({ search }) {
             profilePic: profilePic ? `${base_Url}/profilePics/${profilePic}` : profilePicAvatar,
             id: _id,
         });
+        setClickedUserId(_id); // Set the clicked user ID
     };
 
     const filteredData = search
@@ -54,14 +57,30 @@ function People({ search }) {
                     <i className="fa-solid fa-spinner fa-spin send-icon" /> {/* Spinner icon */}
                 </div>
             ) : filteredData.length > 0 ? (
-                filteredData.map((item) => {
+                filteredData.map((item, index) => {
                     const isOnline = onlineUsers.includes(item._id);
+                    const isClicked = clickedUserId === item._id; // Check if this item is clicked
                     return (
                         <div
                             key={item._id}
                             onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)}
-                            className="flex align-items-center border cursor-pointer w-99 ms-3"
+                            className="flex align-items-center cursor-pointer w-99 ps-2 py-1 people-container" style={{
+                                position: 'relative',
+                                backgroundColor: isClicked ? '#1c1c20ad' :'', // Change color based on isClicked state
+                                transition: 'background-color 0.3s ease', // Smooth transition for color change
+                            }}
                         >
+                            {index !== 0 && (
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,         // Position at the top of the container
+                                        left: '27%',
+                                        width: '70%',   
+                                        borderTop: '1px solid #3c3c46',  // Border style
+                                    }}
+                                />
+                            )}
                             <div className={`avatar ${isOnline ? "online" : ""}`}>
                                 <div className="w-20 rounded-full">
                                     <img

@@ -35,7 +35,7 @@ function MessageContainer() {
             <div className='message-container-main'>
               <div className="flex message-top-container pt-2 ps-3">
                 <div className="avatar">
-                  <div className="w-16 h-16 rounded-full">
+                  <div className="max-w-16 max-h-16 rounded-full">
                     <img className='img-fluid' src={state.profilePic} alt="Avatar" />
                   </div>
                 </div>
