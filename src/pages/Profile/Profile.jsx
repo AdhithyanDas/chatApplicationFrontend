@@ -8,6 +8,7 @@ import base_Url from '../../services/baseUrl';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { authContext } from '../../context/ContextApi';
+import { useSocketContext } from '../../context/SocketContext';
 
 function Profile() {
 
@@ -17,6 +18,7 @@ function Profile() {
 
     const [preview, setPreview] = useState('');
     const [loading, setLoading] = useState(false);
+    const { handleLogout } = useSocketContext()
 
     const { authContextStatus, setAuthContextStatus } = useContext(authContext)
 
@@ -63,13 +65,13 @@ function Profile() {
             }
 
             if (res.status === 200) {
+                handleLogout()
                 toast.success("Your changes have been saved!")
-                sessionStorage.clear();
-                setAuthContextStatus(false)
                 nav('/');
-                setTimeout(() => {
-                    window.location.reload();
-                }, [1000])
+                setAuthContextStatus(false)
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, [1000])
             } else {
                 toast.error("Full Name is required!")
             }
@@ -105,12 +107,13 @@ function Profile() {
             const res = await deleteaccountApi(email, header);
 
             if (res.status === 200) {
+                handleLogout()
                 toast.success("Your account has been successfully deleted!")
-                sessionStorage.clear();
+                // sessionStorage.clear();
                 nav('/');
-                setTimeout(() => {
-                    window.location.reload();
-                }, [1000])
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, [1000])
                 setAuthContextStatus(false)
             }
         }

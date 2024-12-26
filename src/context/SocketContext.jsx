@@ -47,6 +47,10 @@ export const SocketContext = ({ children }) => {
     const handleLoginSubmit = (newUserId) => {
         sessionStorage.setItem("_id", newUserId);
         setUserId(newUserId);
+        if (socket) {
+            socket.emit("userLoggedIn", newUserId)
+        }
+        
     };
 
     const handleLogout = () => {
