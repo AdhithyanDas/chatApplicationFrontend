@@ -26,23 +26,23 @@ function MessageContainer() {
       {
         state.Boolean ?
           <div className='d-flex justify-content-center flex-column align-items-center no-chat-selected'>
-            <h3>Welcome, <strong>{sessionStorage.getItem('fullName')}</strong> <i className="fa-solid fa-handshake-angle " size="lg" /></h3>
-            <h4><strong>Select a chat</strong> to start messaging</h4>
+            <h3 className='text-center'>Welcome, <strong>{sessionStorage.getItem('fullName')}</strong> <i className="fa-solid fa-handshake-angle " size="lg" /></h3>
+            <h4 className='text-center'><strong>Select a chat</strong> to start messaging</h4>
             <i className="fa-regular fa-message fs-3 mt-2 message-icon" />
           </div>
           :
           <>
             <div className='message-container-main'>
-              <div className="flex message-top-container pt-2 ps-3">
+              <div className="flex message-top-container ps-3 align-items-center">
                 <div className="avatar">
                   <div className="max-w-16 max-h-16 rounded-full">
                     <img className='img-fluid' src={state.profilePic} alt="Avatar" />
                   </div>
                 </div>
 
-                <div className='flex flex-col ms-3 mt-2'>
+                <div className='flex flex-col ms-3 '>
                   <span className='fw-bold'>{state.fullName}</span>
-                  <p style={{ color: isOnline ? "#28A745" : "#E63946" }}>{`${isOnline ? "online" : "offline"}`}</p>
+                  <span style={{ color: isOnline ? "#28A745" : "#E63946" }}>{`${isOnline ? "online" : "offline"}`}</span>
                 </div>
               </div>
 

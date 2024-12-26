@@ -45,9 +45,9 @@
 
 @media (max-width: 479px){
   .home-sidebar-container{
-    width: 13vw;
+    width: 16vw;
   }
   .home-message-container{
-    width: 66vw;
+    width: 64vw;
   }
 }

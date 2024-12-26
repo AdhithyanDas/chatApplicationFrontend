@@ -21,7 +21,7 @@
   position: absolute;
   color: #ffffff;
   right: 20px;
-  top: 15%;
+  top: 13%;
   cursor: pointer;
   font-size: 18px;
   transition: 0.4s;
@@ -30,7 +30,7 @@
   border: none;
 }
 
-.message-btn:hover{
+.message-btn:hover {
   color: #3498db; /* Optional: Change to blue when hovered for interaction */
 }
 
@@ -67,9 +67,20 @@
   color: #fff;
 }
 
-
-@media (max-width:479px){
-  .messageinp{
+@media (max-width: 479px) {
+  .messageinp {
     width: 75%;
+  }
+}
+
+@media (min-width: 780px) and (max-width: 1100px) {
+  .messageinp {
+    width: 88%;
+  }
+}
+
+@media (min-width: 479px) and (max-width:779px) {
+  .messageinp{
+    width: 87%;
   }
 }

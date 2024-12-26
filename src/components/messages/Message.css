@@ -72,11 +72,20 @@
   animation: scroll linear;
   animation-timeline: view();
   animation-range: entry 0% cover 17%;
-  scroll-behavior: smooth;
 }
 
 .chat-bubble {
-  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   max-width: 100%;
   word-break: break-word; /* Ensures long words in a single string break */
+}
+
+.chat-footer {
+  margin-right: 0;
+  text-align: right; /* Align to the right for outgoing messages */
+}
+
+.chat.chat-start .chat-footer {
+  text-align: left; /* Align to the left for incoming messages */
 }

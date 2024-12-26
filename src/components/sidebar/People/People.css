@@ -19,6 +19,7 @@
   animation-timeline: view();
   animation-range: entry 0% cover 15%;
   scroll-behavior: smooth;
+  padding-left: 10px;
 }
 
 .people-border{
@@ -36,5 +37,14 @@
     .people-border{
         left: 5%;
         width: 88%;
+    }
+    .no-user{
+      display: none;
+    }
+  }
+
+  @media (max-width: 479px){
+    .people{
+      padding: 2px;
     }
   }

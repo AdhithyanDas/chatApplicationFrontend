@@ -64,7 +64,7 @@ function People({ search }) {
                         <div
                             key={item._id}
                             onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)}
-                            className="flex align-items-center cursor-pointer w-99 ps-2 py-1 people-container people" style={{
+                            className="flex align-items-center cursor-pointer w-99 py-1 people-container people" style={{
                                 position: 'relative',
                                 backgroundColor: isClicked ? '#1c1c20ad' :'', // Change color based on isClicked state
                                 transition: 'background-color 0.3s ease', // Smooth transition for color change
@@ -89,7 +89,7 @@ function People({ search }) {
                     );
                 })
             ) : (
-                <h4 className='text-center fw-bold'>Oops! No users found.</h4>
+                <h4 className='text-center fw-bold no-user'>Oops! No users found.</h4>
             )}
         </div>
     );

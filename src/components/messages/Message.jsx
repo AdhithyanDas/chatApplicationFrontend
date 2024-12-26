@@ -76,7 +76,7 @@ function Message() {
                   key={item._id}
                   ref={scrollRef}
                 >
-                  <div className="chat-image avatar">
+                  <div className="chat-image avatar scroll-anim">
                     <div className="w-10 rounded-full">
                       <img
                         alt="User Avatar"
@@ -97,7 +97,7 @@ function Message() {
                       background: item.senderId === state.id ? "#3498db" : "#2ecc71",
                       color: item.senderId === state.id ? "white" : "#1c1c1c"
                     }}>{item.text}</div>
-                    <div className="chat-footer opacity-50">
+                    <div className="chat-footer opacity-50 ">
                       {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -106,7 +106,7 @@ function Message() {
               ))
             ) : (
               <div className='flex justify-center align-items-center flex-col h-100'>
-                <h3><strong>No chats yet. Start a conversation!</strong></h3>
+                <h3 className='text-center'><strong>No chats yet. Start a conversation!</strong></h3>
                 <i className="fa-regular fa-comment-dots fs-4 start-conversation-icon"></i>
               </div>
             )}

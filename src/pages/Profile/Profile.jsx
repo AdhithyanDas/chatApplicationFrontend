@@ -141,7 +141,7 @@ function Profile() {
                     <p className="text-center" style={{ color: '#EDEDED' }}>Your profile information</p>
                     <div className="d-flex justify-content-center relative">
                         <img
-                            className="size-32 rounded-full object-cover border-4"
+                            className="w-32 h-32  rounded-full object-cover border-3"
                             src={
                                 preview
                                     ? preview
