@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext } from '../../context/ContextApi'
 import './Header.css'
+import toast from 'react-hot-toast'
 
 function Header() {
 
@@ -11,7 +12,10 @@ function Header() {
     const handleLogout = () => {
         sessionStorage.clear()
         nav('/')
-        window.location.reload()
+        toast.success("You have successfully logged out!")
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000)
         setAuthContextStatus(false)
     }
 

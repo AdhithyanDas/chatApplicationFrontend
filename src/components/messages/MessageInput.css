@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   border-top: 2px solid #3c3c46;
-  box-shadow: 0 0 27px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   height: 10vh;
 }
@@ -66,4 +65,11 @@
 .fa-spinner {
   font-size: 1.5rem;
   color: #fff;
+}
+
+
+@media (max-width:479px){
+  .messageinp{
+    width: 75%;
+  }
 }

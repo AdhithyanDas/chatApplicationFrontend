@@ -28,13 +28,26 @@
   width: 20vw;
 }
 
-@media (max-width: 480) {
-  .home-message-container{
-    
+@media (min-width: 780px) and (max-width: 1300px) {
+  .home-sidebar-container{
+    width: 27vw;
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 480px) and (max-width: 779px) {
   .home-sidebar-container{
+    width: 13vw;
+  }
+  .home-message-container{
+    width: 67vw;
+  }
+}
+
+@media (max-width: 479px){
+  .home-sidebar-container{
+    width: 13vw;
+  }
+  .home-message-container{
+    width: 66vw;
   }
 }

@@ -1,5 +1,40 @@
 /* Apply color on hover for all .people-container */
 .people-container:hover {
-    background-color: #1c1c20ad ; /* Hover color */
+  background-color: #1c1c20ad; /* Hover color */
 }
 
+@keyframes scroll {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.people {
+  animation: scroll linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 15%;
+  scroll-behavior: smooth;
+}
+
+.people-border{
+    position: absolute;
+    top: 0;
+    left: 27%;
+    width: 70%;
+    border-top: 1px solid #3c3c46;
+}
+
+@media (max-width: 779px) {
+    .people-name{
+      display: none;
+    }
+    .people-border{
+        left: 5%;
+        width: 88%;
+    }
+  }

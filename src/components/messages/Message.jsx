@@ -92,12 +92,14 @@ function Message() {
                       />
                     </div>
                   </div>
-                  <div className="chat-bubble" style={{
-                    background: item.senderId === state.id ? "#3498db" : "#2ecc71",
-                    color: item.senderId === state.id ? "white" : "#1c1c1c"
-                  }}>{item.text}</div>
-                  <div className="chat-footer opacity-50">
-                    {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <div className='scroll-anim'>
+                    <div className="chat-bubble" style={{
+                      background: item.senderId === state.id ? "#3498db" : "#2ecc71",
+                      color: item.senderId === state.id ? "white" : "#1c1c1c"
+                    }}>{item.text}</div>
+                    <div className="chat-footer opacity-50">
+                      {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </div>
                   </div>
                   <span ref={scrollRef}></span>
                 </div>

@@ -64,25 +64,17 @@ function People({ search }) {
                         <div
                             key={item._id}
                             onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)}
-                            className="flex align-items-center cursor-pointer w-99 ps-2 py-1 people-container" style={{
+                            className="flex align-items-center cursor-pointer w-99 ps-2 py-1 people-container people" style={{
                                 position: 'relative',
                                 backgroundColor: isClicked ? '#1c1c20ad' :'', // Change color based on isClicked state
                                 transition: 'background-color 0.3s ease', // Smooth transition for color change
                             }}
                         >
                             {index !== 0 && (
-                                <span
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,         // Position at the top of the container
-                                        left: '27%',
-                                        width: '70%',   
-                                        borderTop: '1px solid #3c3c46',  // Border style
-                                    }}
-                                />
+                                <span className='people-border' />
                             )}
                             <div className={`avatar ${isOnline ? "online" : ""}`}>
-                                <div className="w-20 rounded-full">
+                                <div className="max-w-20 rounded-full">
                                     <img
                                         className="img-fluid"
                                         src={item.profilePic ? `${base_Url}/profilePics/${item.profilePic}` : profilePicAvatar}
@@ -90,14 +82,14 @@ function People({ search }) {
                                     />
                                 </div>
                             </div>
-                            <div className="ms-4">
+                            <div className="ms-4 people-name">
                                 <h6 className="fw-bold">{item.fullName}</h6>
                             </div>
                         </div>
                     );
                 })
             ) : (
-                <h1>No users available</h1>
+                <h4 className='text-center fw-bold'>Oops! No users found.</h4>
             )}
         </div>
     );
