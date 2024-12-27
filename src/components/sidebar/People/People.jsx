@@ -1,22 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { getUsersForSidebarApi } from '../../../services/allApis';
+import './People.css';
 import profilePicAvatar from '../../../images/avatar.png';
 import base_Url from '../../../services/baseUrl';
+import { getUsersForSidebarApi } from '../../../services/allApis';
 import { messageContainerContext } from '../../../context/ContextApi';
 import { useSocketContext } from '../../../context/SocketContext';
-import './People.css'; // Import the CSS for spinner
 
 function People({ search }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state
-    const { state, setState } = useContext(messageContainerContext);
-    const { onlineUsers } = useSocketContext();
-    const [clickedUserId, setClickedUserId] = useState(null); // Track clicked user
 
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true); // loading-spinner
+    const [clickedUserId, setClickedUserId] = useState(null); // Track-clicked-user
+
+    const { state, setState } = useContext(messageContainerContext); // messageContainerContext
+    const { onlineUsers } = useSocketContext(); // onlineUsers
+
+    // fetchData
     useEffect(() => {
         getData();
     }, []);
 
+    // fetchData
     const getData = async () => {
         const header = {
             "Content-Type": "multipart/form-data",
@@ -24,16 +28,16 @@ function People({ search }) {
         };
 
         const res = await getUsersForSidebarApi(header);
-        if (res.status === 200) {
+
+        if (res.status == 200) {
             setData(res.data);
-            setLoading(false); // Set loading to false once data is fetched
+            setLoading(false);
         } else {
-            setLoading(false); // Stop loading even if there's an error
-            // Handle error case here if needed
+            setLoading(false);
         }
     };
 
-
+    // selectUser-div
     const handleDivClick = (fullName, profilePic, _id) => {
         setState({
             Boolean: false,
@@ -41,9 +45,10 @@ function People({ search }) {
             profilePic: profilePic ? `${base_Url}/profilePics/${profilePic}` : profilePicAvatar,
             id: _id,
         });
-        setClickedUserId(_id); // Set the clicked user ID
+        setClickedUserId(_id);
     };
 
+    // search-people
     const filteredData = search
         ? data.filter((user) =>
             user.fullName.toLowerCase().includes(search.toLowerCase())
@@ -52,27 +57,36 @@ function People({ search }) {
 
     return (
         <div className="people-list">
-            {loading ? ( // Show spinner while loading
+
+            {/* loading-spinner */}
+            {loading ? (
                 <div className="spinner-wrapper">
-                    <i className="fa-solid fa-spinner fa-spin send-icon" /> {/* Spinner icon */}
+                    <i className="fa-solid fa-spinner fa-spin send-icon" />
                 </div>
             ) : filteredData.length > 0 ? (
                 filteredData.map((item, index) => {
-                    const isOnline = onlineUsers.includes(item._id);
-                    const isClicked = clickedUserId === item._id; // Check if this item is clicked
+                    const isOnline = onlineUsers.includes(item._id); // onlineUsers
+                    const isClicked = clickedUserId == item._id; // clickedUserId
+
                     return (
+
+                        // selectUser-div
                         <div
                             key={item._id}
                             onClick={() => handleDivClick(item.fullName, item.profilePic, item._id)}
-                            className="flex align-items-center cursor-pointer w-99 py-1 people-container people" style={{
+                            className="flex align-items-center cursor-pointer w-99 py-1 people-container people"
+                            style={{
                                 position: 'relative',
-                                backgroundColor: isClicked ? '#1c1c20ad' :'', // Change color based on isClicked state
-                                transition: 'background-color 0.3s ease', // Smooth transition for color change
+                                backgroundColor: isClicked ? '#1c1c20ad' : '',
+                                transition: 'background-color 0.3s ease',
                             }}
                         >
+                            {/* people-border-bottom */}
                             {index !== 0 && (
                                 <span className='people-border' />
                             )}
+
+                            {/* profilePic */}
                             <div className={`avatar ${isOnline ? "online" : ""}`}>
                                 <div className="max-w-20 rounded-full">
                                     <img
@@ -82,6 +96,8 @@ function People({ search }) {
                                     />
                                 </div>
                             </div>
+
+                            {/* fullName */}
                             <div className="ms-4 people-name">
                                 <h6 className="fw-bold">{item.fullName}</h6>
                             </div>
@@ -91,7 +107,7 @@ function People({ search }) {
             ) : (
                 <h4 className='text-center fw-bold no-user'>Oops! No users found.</h4>
             )}
-        </div>
+        </div >
     );
 }
 

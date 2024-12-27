@@ -13,7 +13,7 @@ export const profileUpdateApi = async (data, header) => {
     return await commonApi(`${base_Url}/updateprofile`, 'PUT', header, data)
 }
 
-export const deleteaccountApi = async (email, header) => {
+export const deleteAccountApi = async (email, header) => {
     return await commonApi(`${base_Url}/delaccount/${email}`, 'DELETE', header, {})
 }
 

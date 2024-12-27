@@ -3,8 +3,8 @@ import './Auth.css'
 import { loginApi, registerApi } from '../../services/allApis'
 import { useNavigate } from 'react-router-dom'
 import { useSocketContext } from '../../context/SocketContext'
-import toast from 'react-hot-toast'
 import { authContext } from '../../context/ContextApi'
+import toast from 'react-hot-toast'
 
 function Auth() {
 
@@ -12,19 +12,20 @@ function Auth() {
     fullName: "", email: "", password: ""
   })
 
-  const [state, setState] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [state, setState] = useState(false) // changeState
+  const [loading, setLoading] = useState(false) // loading-spinner
 
-  const { authContextStatus, setAuthContextStatus } = useContext(authContext)
-
-  const { handleLoginSubmit } = useSocketContext();
+  const { authContextStatus, setAuthContextStatus } = useContext(authContext) // contextStatus
+  const { handleLoginSubmit } = useSocketContext(); // loginSocketContext
 
   const nav = useNavigate()
 
+  // changeState
   const changeState = () => {
     setState(!state)
   }
 
+  // registration
   const handleRegister = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -36,7 +37,7 @@ function Auth() {
       const res = await registerApi(user)
       console.log(res)
       setLoading(false)
-      if (res.status === 200) {
+      if (res.status == 200) {
         setuser({
           fullName: "", email: "", password: ""
         })
@@ -48,6 +49,7 @@ function Auth() {
     }
   }
 
+  // logIn
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -59,7 +61,7 @@ function Auth() {
       const res = await loginApi(user)
       console.log(res)
       setLoading(false)
-      if (res.status === 200) {
+      if (res.status == 200) {
         const userId = res.data._id;
         setuser({
           fullName: "", email: "", password: ""
@@ -83,6 +85,7 @@ function Auth() {
     <div className='auth-main-container'>
       <div className='auth-second-container'>
         <div className="auth-form">
+          {/* headline */}
           <h2>
             {loading ? (
               <i className="fa-solid fa-spinner fa-spin auth-spinner"></i>
@@ -90,10 +93,13 @@ function Auth() {
               state ? 'Register' : 'Login'
             )}
           </h2>
+
+          {/* form */}
           <form action="">
             {state &&
               <div>
                 <div className='auth-input-box'>
+                  {/* fullName */}
                   <input
                     onChange={e => setuser({ ...user, fullName: e.target.value })}
                     value={user.fullName}
@@ -109,6 +115,7 @@ function Auth() {
 
             <div>
               <div className='auth-input-box'>
+                {/* email */}
                 <input
                   onChange={e => setuser({ ...user, email: e.target.value })}
                   value={user.email}
@@ -119,7 +126,9 @@ function Auth() {
                 <label htmlFor="email">Email address</label>
                 <i className="fa-solid fa-envelope" />
               </div>
+
               <div className='auth-input-box'>
+                {/* password */}
                 <input
                   onChange={e => setuser({ ...user, password: e.target.value })}
                   value={user.password}
@@ -132,6 +141,7 @@ function Auth() {
               </div>
             </div>
 
+            {/* buttons */}
             <div className='auth-input-box'>
               {state ? (
                 <button onClick={handleRegister} className='btn sign-up_in-btn' type='submit'>Sign Up</button>
@@ -140,6 +150,7 @@ function Auth() {
               )}
             </div>
 
+            {/* changeState */}
             <div className='auth-link-container'>
               <p style={{ color: '#EDEDED' }}>
                 {state ? 'Have an account?' : "Don't have an account?"}
@@ -148,6 +159,7 @@ function Auth() {
                 </a>
               </p>
             </div>
+
           </form>
         </div>
       </div>

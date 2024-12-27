@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './MessageInput.css'
-import { messageContainerContext } from '../../context/ContextApi'
-import { sendMessageApi } from '../../services/allApis'
+import { messageContainerContext } from '../../../context/ContextApi'
+import { sendMessageApi } from '../../../services/allApis'
 
 function MessageInput({ response }) {
-
-    const { state, setState } = useContext(messageContainerContext)
 
     const [messages, setMessages] = useState({
         text: "", receiverId: "", senderId: sessionStorage.getItem('_id')
     })
+    const [loading, setLoading] = useState(false); // loading-spinner
 
-    const [loading, setLoading] = useState(false);
+    const { state, setState } = useContext(messageContainerContext) // messageContainerContext
 
     useEffect(() => {
         setMessages(e => ({
@@ -19,10 +18,10 @@ function MessageInput({ response }) {
         }))
     }, [state.id])
 
+    // handleMessages
     const handleMessages = async () => {
         if (loading || !messages.text.trim()) return;
         setLoading(true);
-
         const { text, receiverId, senderId } = messages;
         const data = { text, receiverId, senderId };
 
@@ -66,9 +65,9 @@ function MessageInput({ response }) {
                 <input onChange={e => setMessages({ ...messages, text: e.target.value })} value={messages.text} type="text" placeholder='Type a message...' className='messageinp' />
                 <button className='btn message-btn' onClick={handleMessages} disabled={loading}>
                     {loading ? (
-                        <i className="fa-solid fa-spinner fa-spin send-icon" /> // Spinner icon
+                        <i className="fa-solid fa-spinner fa-spin send-icon" /> // Spinner-icon
                     ) : (
-                        <i className="fa-solid fa-paper-plane send-icon" /> // Default send icon
+                        <i className="fa-solid fa-paper-plane send-icon" /> // Default-send-icon
                     )}
                 </button>
             </div>

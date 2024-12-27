@@ -48,7 +48,6 @@
   left: 0;
 }
 
-/* Spinner Style */
 .spinner {
   position: absolute;
   top: 30%;
@@ -56,8 +55,11 @@
   animation: spin 1s linear infinite;
 }
 
-/* Simple spinner animation */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

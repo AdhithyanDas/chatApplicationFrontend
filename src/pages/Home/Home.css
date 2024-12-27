@@ -4,14 +4,13 @@
   align-items: center;
   height: 91vh;
   color: #fff;
-  background: #25252B;
+  background: #25252b;
 }
 
 .home-second-container {
-  /* overflow: hidden; */
   height: 80vh;
   width: 80vw;
-  border: 2px solid #3C3C46;
+  border: 2px solid #3c3c46;
   border-radius: 10px;
   box-shadow: 0 0 27px rgba(0, 0, 0, 0.3);
 }
@@ -19,35 +18,33 @@
 .home-message-container {
   background-color: #1c1c20ad;
   border-left: 1px solid rgba(0, 0, 0, 0.227);
-  /* box-shadow: 0 0 27px rgba(0, 0, 0, 0.3); */
-  /* height: 100%; */
   width: 60vw;
 }
 
-.home-sidebar-container{
+.home-sidebar-container {
   width: 20vw;
 }
 
 @media (min-width: 780px) and (max-width: 1300px) {
-  .home-sidebar-container{
+  .home-sidebar-container {
     width: 27vw;
   }
 }
 
 @media (min-width: 480px) and (max-width: 779px) {
-  .home-sidebar-container{
+  .home-sidebar-container {
     width: 13vw;
   }
-  .home-message-container{
+  .home-message-container {
     width: 67vw;
   }
 }
 
-@media (max-width: 479px){
-  .home-sidebar-container{
+@media (max-width: 479px) {
+  .home-sidebar-container {
     width: 16vw;
   }
-  .home-message-container{
+  .home-message-container {
     width: 64vw;
   }
 }

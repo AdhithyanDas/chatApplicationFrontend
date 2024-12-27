@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { useSocketContext } from "../src/context/SocketContext";
+import { useSocketContext } from "../context/SocketContext";
 
 function inComingMessages(messages, setMessages) {
+
     const { socket } = useSocketContext();
 
     useEffect(() => {

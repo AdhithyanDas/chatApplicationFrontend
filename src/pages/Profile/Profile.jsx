@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Profile.css';
-import profilepicavatar from '../../images/avatar.png';
 import { Camera, User, Mail, ArrowLeft, Trash } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteaccountApi, profileUpdateApi } from '../../services/allApis';
+import { deleteAccountApi, profileUpdateApi } from '../../services/allApis';
+import { authContext } from '../../context/ContextApi';
+import { useSocketContext } from '../../context/SocketContext';
+import profilepicavatar from '../../images/avatar.png';
 import base_Url from '../../services/baseUrl';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { authContext } from '../../context/ContextApi';
-import { useSocketContext } from '../../context/SocketContext';
 
 function Profile() {
 
@@ -16,14 +16,15 @@ function Profile() {
         profilePic: '', fullName: '', email: '',
     });
 
-    const [preview, setPreview] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { handleLogout } = useSocketContext()
+    const [preview, setPreview] = useState(''); // profilePic-preview
+    const [loading, setLoading] = useState(false); // loading-spinner
 
-    const { authContextStatus, setAuthContextStatus } = useContext(authContext)
+    const { handleLogout } = useSocketContext() // logoutSocketContext
+    const { authContextStatus, setAuthContextStatus } = useContext(authContext) // contextStatus
 
     const nav = useNavigate();
 
+    // setUserData
     useEffect(() => {
         if (sessionStorage.getItem('email')) {
             setUserData({
@@ -35,6 +36,7 @@ function Profile() {
         }
     }, []);
 
+    // profilePic
     useEffect(() => {
         if (userData.profilePic.type) {
             setPreview(URL.createObjectURL(userData.profilePic));
@@ -43,6 +45,7 @@ function Profile() {
         }
     }, [userData.profilePic]);
 
+    // profileUpdation
     const handleProfileUpdation = async () => {
         setLoading(true);
         const { profilePic, fullName, email } = userData;
@@ -64,24 +67,22 @@ function Profile() {
                 res = await profileUpdateApi({ profilePic, fullName, email }, header);
             }
 
-            if (res.status === 200) {
+            if (res.status == 200) {
                 handleLogout()
                 toast.success("Your changes have been saved!")
                 nav('/');
                 setAuthContextStatus(false)
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, [1000])
             } else {
                 toast.error("Full Name is required!")
             }
         } catch (error) {
-            console.error('Error updating profile:', error);
+            console.error(error);
         } finally {
             setLoading(false);
         }
     };
 
+    // deleteAccount
     const handleDeleteAccount = async (email, e) => {
         e.preventDefault();
         const result = await Swal.fire({
@@ -104,20 +105,15 @@ function Profile() {
                 Authorization: `Token ${sessionStorage.getItem('token')}`,
             };
 
-            const res = await deleteaccountApi(email, header);
+            const res = await deleteAccountApi(email, header);
 
-            if (res.status === 200) {
+            if (res.status == 200) {
                 handleLogout()
                 toast.success("Your account has been successfully deleted!")
-                // sessionStorage.clear();
                 nav('/');
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, [1000])
                 setAuthContextStatus(false)
             }
         }
-
     };
 
     return (
@@ -125,11 +121,14 @@ function Profile() {
             <div className="d-flex justify-content-center align-items-center" style={{ height: '91vh', background: '#25252B' }} >
                 <div className="profile-second-container px-4" style={{ minWidth: '35vw', height: '76vh' }}>
                     <div className="d-flex justify-between">
+                        {/* leftArrow */}
                         <Link to={'/home'}>
                             <button className="btn" style={{ color: '#EDEDED', border: '0', marginLeft: '-23px' }}>
                                 <ArrowLeft />
                             </button>
                         </Link>
+
+                        {/* accountDelete */}
                         <Link to={'/'}>
                             <button
                                 onClick={(e) => handleDeleteAccount(userData.email, e)}
@@ -140,20 +139,23 @@ function Profile() {
                             </button>
                         </Link>
                     </div>
+
+                    {/* profileInfo */}
                     <h3 className="text-white text-center fw-bold">Profile</h3>
                     <p className="text-center" style={{ color: '#EDEDED' }}>Your profile information</p>
+
                     <div className="d-flex justify-content-center relative">
+                        {/* profilePic */}
                         <img
                             className="w-32 h-32  rounded-full object-cover border-3"
                             src={
-                                preview
-                                    ? preview
-                                    : sessionStorage.getItem('profilePic')
-                                        ? `${base_Url}/profilePics/${sessionStorage.getItem('profilePic')}`
-                                        : profilepicavatar
+                                preview ? preview : sessionStorage.getItem('profilePic')
+                                    ? `${base_Url}/profilePics/${sessionStorage.getItem('profilePic')}` : profilepicavatar
                             }
-                            alt=""
+                            alt="profile"
                         />
+
+                        {/* profilePicLabel */}
                         <label
                             htmlFor="avatar-upload"
                             className="absolute bottom- ms-24 mt-20 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 profile-pic-button"
@@ -170,6 +172,7 @@ function Profile() {
 
                     <div className="mt-4 w-100">
                         <div className="d-grid">
+                            {/* fullName */}
                             <label htmlFor='fullname' className="d-flex text-white">
                                 <User className="w-4 h-4 mt-1" />
                                 <span className="ms-1">Full Name</span>
@@ -184,6 +187,7 @@ function Profile() {
                         </div>
                         <div className="d-grid mt-3">
                             <div className="d-flex profile-second-input">
+                                {/* email */}
                                 <Mail className="w-4 h-4 mt-1" />
                                 <span className="ms-1">Email address</span>
                             </div>
@@ -192,6 +196,7 @@ function Profile() {
                     </div>
 
                     <div className="mt-4 d-grid">
+                        {/* submit-btn */}
                         <button
                             className="btn text-white profile-save-button"
                             onClick={handleProfileUpdation}
@@ -200,7 +205,7 @@ function Profile() {
                             {loading ? (
                                 <i className="fa-solid fa-spinner fa-spin"></i>
                             ) : (
-                                'Save Changes'
+                                'Save changes'
                             )}
                         </button>
                     </div>

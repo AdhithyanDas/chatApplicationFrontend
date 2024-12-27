@@ -10,12 +10,10 @@ export const useSocketContext = () => {
 export const SocketContext = ({ children }) => {
 
     const [socket, setSocket] = useState(null)
-    const [onlineUsers, setOnlineUsers] = useState([])
+    const [onlineUsers, setOnlineUsers] = useState([]) // onlineUsers
     const [userId, setUserId] = useState(sessionStorage.getItem("_id"));
 
     useEffect(() => {
-        // const userId = sessionStorage.getItem('_id');
-
         if (userId) {
             const socket = io("http://localhost:3000", {
                 query: {
@@ -25,6 +23,7 @@ export const SocketContext = ({ children }) => {
 
             setSocket(socket)
 
+            // onlineUsers
             socket.on("getOnlineUsers", (users) => {
                 setOnlineUsers(users)
             })
@@ -43,16 +42,17 @@ export const SocketContext = ({ children }) => {
         }
     }, [userId])
 
-
+    // login
     const handleLoginSubmit = (newUserId) => {
         sessionStorage.setItem("_id", newUserId);
         setUserId(newUserId);
         if (socket) {
             socket.emit("userLoggedIn", newUserId)
         }
-        
+
     };
 
+    // logout
     const handleLogout = () => {
         sessionStorage.clear();
         setUserId(null);

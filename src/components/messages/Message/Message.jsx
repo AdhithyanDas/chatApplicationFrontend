@@ -1,25 +1,30 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { messageContainerContext } from '../../context/ContextApi';
-import { getMessageApi } from '../../services/allApis';
-import base_Url from '../../services/baseUrl';
-import profilepicavatar from '../../images/avatar.png';
-import './Message.css'; // Include CSS for loading spinner
+import './Message.css';
+import profilepicavatar from '../../../images/avatar.png';
+import base_Url from '../../../services/baseUrl';
 import inComingMessages from '../../../hooks/inComingMessages';
+import { messageContainerContext } from '../../../context/ContextApi';
+import { getMessageApi } from '../../../services/allApis';
 
 function Message() {
-  const { state } = useContext(messageContainerContext);
-  const scrollRef = useRef(); // Ref for scrolling
+
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true); // State to track loading
-
-  inComingMessages(messages, setMessages);
   const [receiverId, setReceiverId] = useState('');
+  const [loading, setLoading] = useState(true); // loading
 
+  const { state } = useContext(messageContainerContext); // messageContainerContext
+
+  const scrollRef = useRef(); // scrolling
+
+  inComingMessages(messages, setMessages); // inComingMessages
+
+  // fetch-data
   useEffect(() => {
-    setLoading(true); // Set loading to true before fetching data
+    setLoading(true);
     getData();
   }, [state.id]);
 
+  // fetch-data
   const getData = async () => {
     const headers = {
       'Content-Type': 'application/json',
@@ -36,23 +41,26 @@ function Message() {
         setMessages([]);
       }
     } catch (err) {
-      console.error('Error fetching messages:', err);
+      console.error(err);
       setMessages([]);
     } finally {
-      setLoading(false); // Stop loading once data is fetched
+      setLoading(false);
     }
   };
 
+  // out-Going-Message
   const addOutgoingMessage = (newMessage) => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
+  // out-Going-Message
   useEffect(() => {
-    if (state.newMessage && state.newMessage.receiverId === state.id) {
+    if (state.newMessage && state.newMessage.receiverId == state.id) {
       addOutgoingMessage(state.newMessage);
     }
   }, [state.newMessage]);
 
+  // scrolling
   useEffect(() => {
     setTimeout(() => {
       scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,14 +70,17 @@ function Message() {
   return (
     <>
       <div className="message-container">
+        {/* loading-spinner */}
         {loading ? (
           <div className="loading-spinner-container">
             <div className="loading-spinner"></div>
           </div>
         ) : (
           <div className="message-list">
+
             {messages.length > 0 ? (
               messages.map((item) => (
+                // chat-start - end
                 <div
                   className={`chat ${item.senderId === state.id ? 'chat-start' : 'chat-end'
                     }`}
@@ -78,6 +89,7 @@ function Message() {
                 >
                   <div className="chat-image avatar scroll-anim">
                     <div className="w-10 rounded-full">
+                      {/* profilePic */}
                       <img
                         alt="User Avatar"
                         src={
@@ -92,15 +104,23 @@ function Message() {
                       />
                     </div>
                   </div>
+
                   <div className='scroll-anim'>
-                    <div className="chat-bubble" style={{
-                      background: item.senderId === state.id ? "#3498db" : "#2ecc71",
-                      color: item.senderId === state.id ? "white" : "#1c1c1c"
-                    }}>{item.text}</div>
+                    {/* chat-bubble */}
+                    <div className="chat-bubble"
+                      style={{
+                        background: item.senderId === state.id ? "#3498db" : "#2ecc71",
+                        color: item.senderId === state.id ? "white" : "#1c1c1c"
+                      }}>{item.text}
+                    </div>
+
+                    {/* time */}
                     <div className="chat-footer opacity-50 ">
                       {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
+
+                  {/* scroll */}
                   <span ref={scrollRef}></span>
                 </div>
               ))

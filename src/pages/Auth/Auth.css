@@ -121,6 +121,11 @@
   text-decoration: underline;
 }
 
+.auth-spinner {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
 @media (min-width: 481px) and (max-width: 1124px) {
   .auth-second-container {
     max-width: 70%;
@@ -177,10 +182,4 @@
   .auth-link-container {
     font-size: 12px;
   }
-}
-
-/* Spinner Styling */
-.auth-spinner {
-  font-size: 1.5rem;
-  margin-right: 10px;
 }

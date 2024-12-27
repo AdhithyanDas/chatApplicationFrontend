@@ -25,13 +25,16 @@
   cursor: pointer;
   font-size: 18px;
   transition: 0.4s;
-  transition: all 0.2s ease; /* Smooth transition for animations */
+  transition: all 0.2s ease;
   border-radius: 30px;
   border: none;
+  transition: color 0.4s ease, transform 0.4s ease;
 }
 
 .message-btn:hover {
-  color: #3498db; /* Optional: Change to blue when hovered for interaction */
+  color: #3498db;
+  transform: scale(1.1);
+  transition: color 0.5s ease, transform 0.4s ease;
 }
 
 .messageinp:focus ~ .message-btn {
@@ -42,22 +45,22 @@
 
 @keyframes blast {
   0% {
-    transform: scale(1) rotate(0deg); /* Initial size and rotation */
+    transform: scale(1) rotate(0deg);
     color: white;
   }
   30% {
-    transform: scale(1.2) rotate(20deg); /* Expand and rotate slightly */
+    transform: scale(1.2) rotate(20deg);
     color: #007bff92;
   }
   50% {
-    transform: scale(1.5) rotate(-20deg); /* Max explosion size */
+    transform: scale(1.5) rotate(-20deg);
     color: white;
   }
   70% {
-    transform: scale(1.2) rotate(10deg); /* Shrink slightly but still large */
+    transform: scale(1.2) rotate(10deg);
   }
   100% {
-    transform: scale(1) rotate(0deg); /* Return to original size */
+    transform: scale(1) rotate(0deg);
     color: white;
   }
 }
@@ -79,8 +82,8 @@
   }
 }
 
-@media (min-width: 479px) and (max-width:779px) {
-  .messageinp{
+@media (min-width: 479px) and (max-width: 779px) {
+  .messageinp {
     width: 87%;
   }
 }
