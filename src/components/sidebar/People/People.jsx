@@ -56,8 +56,7 @@ function People({ search }) {
         : data;
 
     return (
-        <div className="people-list">
-
+        <>
             {/* loading-spinner */}
             {loading ? (
                 <div className="spinner-wrapper">
@@ -107,7 +106,7 @@ function People({ search }) {
             ) : (
                 <h4 className='text-center fw-bold no-user'>Oops! No users found.</h4>
             )}
-        </div >
+        </>
     );
 }
 

@@ -70,8 +70,8 @@ function Profile() {
             if (res.status == 200) {
                 handleLogout()
                 toast.success("Your changes have been saved!")
-                nav('/');
                 setAuthContextStatus(false)
+                nav('/');
             } else {
                 toast.error("Full Name is required!")
             }
@@ -110,8 +110,8 @@ function Profile() {
             if (res.status == 200) {
                 handleLogout()
                 toast.success("Your account has been successfully deleted!")
-                nav('/');
                 setAuthContextStatus(false)
+                nav('/');
             }
         }
     };
@@ -119,7 +119,7 @@ function Profile() {
     return (
         <>
             <div className="d-flex justify-content-center align-items-center" style={{ height: '91vh', background: '#25252B' }} >
-                <div className="profile-second-container px-4" style={{ minWidth: '35vw', height: '76vh' }}>
+                <div className="profile-second-container px-4" style={{ minWidth: '35vw', paddingBottom: '2%' }}>
                     <div className="d-flex justify-between">
                         {/* leftArrow */}
                         <Link to={'/home'}>
@@ -147,7 +147,7 @@ function Profile() {
                     <div className="d-flex justify-content-center relative">
                         {/* profilePic */}
                         <img
-                            className="w-32 h-32  rounded-full object-cover border-3"
+                            className="w-32 h-32  rounded-full object-cover border-4"
                             src={
                                 preview ? preview : sessionStorage.getItem('profilePic')
                                     ? `${base_Url}/profilePics/${sessionStorage.getItem('profilePic')}` : profilepicavatar
@@ -205,7 +205,7 @@ function Profile() {
                             {loading ? (
                                 <i className="fa-solid fa-spinner fa-spin"></i>
                             ) : (
-                                'Save changes'
+                                'Save Changes'
                             )}
                         </button>
                     </div>

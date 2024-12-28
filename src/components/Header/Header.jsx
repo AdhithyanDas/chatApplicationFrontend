@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import './Header.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext } from '../../context/ContextApi'
@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 
 function Header() {
 
-    const { authContextStatus, setAuthContextStatus } = useState(authContext) // context-status
+    const { authContextStatus, setAuthContextStatus } = useContext(authContext) // context-status
     const { handleLogout } = useSocketContext() // logout-context
 
     const isLoggedIn = sessionStorage.getItem('_id') // loggedIn
@@ -19,8 +19,8 @@ function Header() {
     const handleLogoutt = () => {
         handleLogout()
         toast.success("You have successfully logged out!")
-        nav('/')
         setAuthContextStatus(false)
+        nav('/')
     }
 
     return (

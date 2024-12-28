@@ -27,27 +27,37 @@ function Auth() {
 
   // registration
   const handleRegister = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    const { fullName, email, password } = user
+    e.preventDefault();
+    setLoading(true);
+    const { fullName, email, password } = user;
+
     if (!fullName || !email || !password) {
-      setLoading(false)
-      toast.error("All fields are required!")
+      setLoading(false);
+      toast.error("All fields are required!");
     } else {
-      const res = await registerApi(user)
-      console.log(res)
-      setLoading(false)
-      if (res.status == 200) {
-        setuser({
-          fullName: "", email: "", password: ""
-        })
-        toast.success("Registration successful!")
-        changeState()
-      } else {
-        toast.error("Password must be at least 6 characters!")
+      if (password.length < 6) {
+        setLoading(false);
+        toast.error("Password must be at least 6 characters!");
       }
     }
-  }
+
+    const res = await registerApi(user);
+    console.log(res);
+    setLoading(false);
+
+    if (res.status == 200) {
+      setuser({
+        fullName: "", email: "", password: ""
+      });
+      toast.success("Registration successful!");
+      changeState();
+    } else if (res.status == 400) {
+      if (res.response.data === 'Email already exists!') {
+        toast.error('Email already registered! Log in or use another email.')
+      }
+    }
+  };
+
 
   // logIn
   const handleLogin = async (e) => {
@@ -154,7 +164,7 @@ function Auth() {
             <div className='auth-link-container'>
               <p style={{ color: '#EDEDED' }}>
                 {state ? 'Have an account?' : "Don't have an account?"}
-                <a onClick={changeState} href="#" className='auth-link'>
+                <a onClick={changeState} href="#" className='auth-link ms-1'>
                   {state ? 'Sign In' : 'Sign Up'}
                 </a>
               </p>

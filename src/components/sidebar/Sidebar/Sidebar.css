@@ -3,7 +3,7 @@
 }
 
 .sidebar-search-input {
-  height: 9vh;
+  height: 7vh;
   padding: 0px 10px 0px 10px;
   margin-top: 5px;
 }
@@ -11,7 +11,7 @@
 .sidebar-scroll-container {
   overflow: auto;
   padding-bottom: 5px;
-  height: 70vh;
+  height: 72vh;
   position: relative;
 }
 
